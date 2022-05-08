@@ -7,6 +7,10 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private float _speed = 3.5f;
+    [SerializeField]
+    private GameObject _laserPrefab;
+
+    private bool _canFireLaser = true;
     
     
     
@@ -23,6 +27,14 @@ public class Player : MonoBehaviour
     {
 
         PlayerMovement();
+
+       
+        if (Input.GetKeyDown(KeyCode.Space) && _canFireLaser)
+        {
+
+            FireLaser();
+
+        }
        
     }
 
@@ -47,5 +59,21 @@ public class Player : MonoBehaviour
 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -4.9f, 0f), 0);
               
+    }
+
+    IEnumerator ReloadTimer()
+    {
+
+        yield return new WaitForSeconds(.5f);
+        _canFireLaser = true;
+
+    }
+
+    void FireLaser()
+    {
+        Instantiate(_laserPrefab, transform.position + new Vector3(0f, .85f, 0f), Quaternion.identity);
+        _canFireLaser = false;
+        StartCoroutine(ReloadTimer());
+
     }
 }
