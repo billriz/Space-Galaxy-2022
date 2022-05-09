@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     private GameObject _laserPrefab;
 
     private bool _canFireLaser = true;
+    [SerializeField]
+    private int _lives = 3;
     
     
     
@@ -75,5 +77,18 @@ public class Player : MonoBehaviour
         _canFireLaser = false;
         StartCoroutine(ReloadTimer());
 
+    }
+
+    public void Damage()
+    {
+
+        _lives--;
+
+        if (_lives < 1)
+        {
+
+            Destroy(this.gameObject);
+
+        }
     }
 }
