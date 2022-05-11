@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     private bool _canFireLaser = true;
     [SerializeField]
     private int _lives = 3;
+    [SerializeField]
+    private float _fireRate = .5f;
 
 
     private SpawnManager _spawnManager;
@@ -76,7 +78,7 @@ public class Player : MonoBehaviour
     IEnumerator ReloadTimer()
     {
 
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(_fireRate);
         _canFireLaser = true;
 
     }
