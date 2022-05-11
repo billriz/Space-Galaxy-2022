@@ -48,7 +48,7 @@ public class PowerUps : MonoBehaviour
                         break;
 
                     case 2:
-                        Debug.LogError("Collected shield");
+                        player.ShieldActive();
                         break;
 
                     default:
