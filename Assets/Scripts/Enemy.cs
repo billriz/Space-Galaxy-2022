@@ -7,12 +7,19 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _speed = 4.0f;
 
+    private Player _player;
+
     
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        _player = GameObject.Find("Player").GetComponent<Player>();
+        if (_player == null)
+        {
+            Debug.LogError("Player is NULL");
+
+        }
     }
 
     // Update is called once per frame
@@ -32,14 +39,8 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-
-        if (other.tag == "Laser")
-        {
-            Destroy(other.gameObject);
-            Destroy(this.gameObject);
-
-        }
-        else if (other.tag == "Player")
+        
+        if (other.tag == "Player")
         {
             Player player = other.GetComponent<Player>();
             if (player != null)
@@ -49,6 +50,19 @@ public class Enemy : MonoBehaviour
             }
             
             Destroy(this.gameObject);
+        }
+
+        if (other.tag == "Laser")
+        {
+
+            Destroy(this.gameObject);
+
+            Destroy(other.gameObject);
+            if (_player != null)
+            {
+               _player.AddPoints(10);
+            }            
+            
         }
     }
 }

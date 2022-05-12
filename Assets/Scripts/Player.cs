@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -7,6 +6,8 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private float _speed = 3.5f;
+    [SerializeField]
+    private int _score;
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
@@ -32,10 +33,13 @@ public class Player : MonoBehaviour
 
 
     private SpawnManager _spawnManager;
-    
-    
-    
-    
+
+    private UIManager _uIManager;
+
+
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,6 +51,13 @@ public class Player : MonoBehaviour
             Debug.LogError("Spawn Manager is Null");
         }
 
+        _uIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        if (_uIManager == null)
+        {
+            Debug.Log("UI Manager is NULL");
+
+        }
+
 
     }
 
@@ -56,19 +67,19 @@ public class Player : MonoBehaviour
 
         PlayerMovement();
 
-       
+
         if (Input.GetKeyDown(KeyCode.Space) && _canFireLaser)
         {
 
             FireLaser();
 
         }
-       
+
     }
 
     void PlayerMovement()
     {
-        
+
         float HorizontalInput = Input.GetAxis("Horizontal");
         float VerticalInput = Input.GetAxis("Vertical");
 
@@ -81,7 +92,7 @@ public class Player : MonoBehaviour
             _speedboost = 1.0f;
         }
 
-        
+
 
 
         transform.Translate(Vector3.right * HorizontalInput * _speed * _speedboost * Time.deltaTime);
@@ -97,7 +108,7 @@ public class Player : MonoBehaviour
         }
 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -4.9f, 0f), 0);
-              
+
     }
 
     IEnumerator ReloadTimer()
@@ -110,7 +121,7 @@ public class Player : MonoBehaviour
 
     void FireLaser()
     {
-       
+
         if (_isTripleShootActive == true)
         {
             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
@@ -119,7 +130,7 @@ public class Player : MonoBehaviour
         {
             Instantiate(_laserPrefab, transform.position + new Vector3(0f, .85f, 0f), Quaternion.identity);
         }
-        
+
         _canFireLaser = false;
         StartCoroutine(ReloadTimer());
 
@@ -130,13 +141,14 @@ public class Player : MonoBehaviour
 
         if (_isShieldActive == true)
         {
-            return;          
+            return;
         }
         else
         {
             _lives--;
+            _uIManager.UpdateLives(_lives);
         }
-        
+
 
         if (_lives < 1)
         {
@@ -146,7 +158,15 @@ public class Player : MonoBehaviour
         }
     }
 
-    
+    public void AddPoints(int points)
+    {
+
+        _score += points;
+        _uIManager.UpdateScore(_score);
+
+    }
+
+
 
     public void TripleShotActive()
     {
