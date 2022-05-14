@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     private GameObject _tripleShotPrefab;
     [SerializeField]
     private GameObject _playerShield;
+    [SerializeField]
+    private GameObject[] _visualDamge;
 
     private bool _canFireLaser = true;
     [SerializeField]
@@ -43,7 +45,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = new Vector3(0, 0, 0);
+        transform.position = new Vector3(0, -4.5f, 0);
 
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         if (_spawnManager == null)
@@ -147,6 +149,7 @@ public class Player : MonoBehaviour
         {
             _lives--;
             _uIManager.UpdateLives(_lives);
+            VisualDamage();
         }
 
 
@@ -208,6 +211,36 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(8.0f);
         _isShieldActive = false;
         _playerShield.SetActive(false);
+
+    }
+
+    void VisualDamage()
+    {
+        switch(_lives)
+        {
+            case 2:
+                int randomDamage = Random.Range(0, 2);
+                _visualDamge[randomDamage].SetActive(true);
+                break;
+
+            case 1:
+                if (_visualDamge[0].activeSelf)
+                {
+                    _visualDamge[1].SetActive(true);
+                }
+                else
+                {
+                    _visualDamge[0].SetActive(true);
+                }
+                break;
+
+            default:
+                break;
+
+
+        }
+        
+
 
     }
 }

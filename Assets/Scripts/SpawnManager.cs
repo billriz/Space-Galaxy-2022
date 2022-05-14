@@ -20,9 +20,9 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(SpawnEnemyRoutine());
+       // StartCoroutine(SpawnEnemyRoutine());
 
-        StartCoroutine(SpawnPowerUpRoutine());
+      //  StartCoroutine(SpawnPowerUpRoutine());
     }
 
     // Update is called once per frame
@@ -60,5 +60,13 @@ public class SpawnManager : MonoBehaviour
     public void OnPlayerDeath()
     {
         _stopSpawning = true;
+    }
+
+    public void OnAstroidDestroyed()
+    {
+        Debug.Log("astroid destroyed");
+        StartCoroutine(SpawnEnemyRoutine());
+
+        StartCoroutine(SpawnPowerUpRoutine());
     }
 }
