@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     private int _lives = 3;
     [SerializeField]
     private float _fireRate = .5f;
-
+    [SerializeField]
     private float _speedboost = 1.0f;
 
     [SerializeField]
@@ -31,6 +31,8 @@ public class Player : MonoBehaviour
     private bool _isSpeedBoostActive = false;
     [SerializeField]
     private bool _isShieldActive = false;
+
+    private bool _isThrusterActive;
     [SerializeField]
     private AudioClip _laserAudioClip;
     [SerializeField]
@@ -80,25 +82,24 @@ public class Player : MonoBehaviour
 
         }
 
+        if (Input.GetKey(KeyCode.LeftShift)) 
+        {
+            _isThrusterActive = true;
+        }
+        else
+        {
+            _isThrusterActive = false;
+        }
+
     }
 
     void PlayerMovement()
     {
+       
+        CheckSpeedBoost();
 
         float HorizontalInput = Input.GetAxis("Horizontal");
-        float VerticalInput = Input.GetAxis("Vertical");
-
-        if (_isSpeedBoostActive == true)
-        {
-            _speedboost = 2.0f;
-        }
-        else
-        {
-            _speedboost = 1.0f;
-        }
-
-
-
+        float VerticalInput = Input.GetAxis("Vertical"); 
 
         transform.Translate(Vector3.right * HorizontalInput * _speed * _speedboost * Time.deltaTime);
         transform.Translate(Vector3.up * VerticalInput * _speed * _speedboost * Time.deltaTime);
@@ -252,5 +253,23 @@ public class Player : MonoBehaviour
 
         AudioSource.PlayClipAtPoint(_powerUpSoundClip, transform.position);
 
+    }
+
+    void CheckSpeedBoost()
+    {
+
+        if (_isSpeedBoostActive == true)
+        {
+            _speedboost = 1.5f;
+        }
+        else if (_isThrusterActive == true)
+        {
+            _speedboost = 2.0f;
+        }
+        else
+        {
+            _speedboost = 1.0f;
+
+        }
     }
 }

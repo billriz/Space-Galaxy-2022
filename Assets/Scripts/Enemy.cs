@@ -53,18 +53,8 @@ public class Enemy : MonoBehaviour
 
         if (_canFire == true)
         {
-            _canFire = false;
-            GameObject enemyLaser = Instantiate(_enemyLaserPrefab, transform.position, Quaternion.identity);
-            Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
 
-            for (int i = 0; i < lasers.Length; i++)
-            {
-
-                lasers[i].SetEnemyLaser();
-            }
-            
-            StartCoroutine(FireControlRoutine());
-
+            FireLaser();
 
         }
 
@@ -85,7 +75,18 @@ public class Enemy : MonoBehaviour
 
     void FireLaser()
     {
+       
+        _canFire = false;
+        GameObject enemyLaser = Instantiate(_enemyLaserPrefab, transform.position, Quaternion.identity);
+        Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
 
+        for (int i = 0; i < lasers.Length; i++)
+        {
+
+            lasers[i].SetEnemyLaser();
+        }
+
+        StartCoroutine(FireControlRoutine());
 
     }
 
@@ -132,10 +133,10 @@ public class Enemy : MonoBehaviour
     void EnemyDestroyed()
     {
 
+        _canFire = false;
         _speed = 0.2f;
         _anim.SetTrigger("OnEnemyDeath");
         AudioSource.PlayClipAtPoint(_enemyExplosionClip, transform.position);
-
         Destroy(GetComponent<Collider2D>());
         Destroy(this.gameObject, 2.5f);
     }
