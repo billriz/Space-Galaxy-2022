@@ -7,6 +7,19 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _speed = 4.0f;
 
+    private float _fireRate;
+
+    private bool _canFire;
+
+    [SerializeField]
+    private AudioClip _enemyExplosionClip;
+    [SerializeField]
+    private GameObject _enemyLaserPrefab;
+    [SerializeField]
+    private AudioClip _laserSoundClip;
+
+
+
     private Player _player;
 
     private Animator _anim;
@@ -28,12 +41,37 @@ public class Enemy : MonoBehaviour
 
             Debug.Log("Animator is NULL");
         }
+
+        StartCoroutine(FireControlRoutine());
     }
 
     // Update is called once per frame
     void Update()
     {
 
+        CalculatMovement();
+
+        if (_canFire == true)
+        {
+            _canFire = false;
+            GameObject enemyLaser = Instantiate(_enemyLaserPrefab, transform.position, Quaternion.identity);
+            Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+
+            for (int i = 0; i < lasers.Length; i++)
+            {
+
+                lasers[i].SetEnemyLaser();
+            }
+            
+            StartCoroutine(FireControlRoutine());
+
+
+        }
+
+    }
+
+    void CalculatMovement()
+    {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
         if (transform.position.y <= -7.1f)
@@ -41,7 +79,21 @@ public class Enemy : MonoBehaviour
             float Randomx = Random.Range(-9f, 9f);
             transform.position = new Vector3(Randomx, 7.5f, 0);
 
-        }              
+        }
+
+    }
+
+    void FireLaser()
+    {
+
+
+    }
+
+    IEnumerator FireControlRoutine()
+    {
+        _fireRate = Random.Range(3.0f, 7.0f);
+        yield return new WaitForSeconds(_fireRate);
+        _canFire = true;
 
     }
 
@@ -58,17 +110,14 @@ public class Enemy : MonoBehaviour
             }
 
             EnemyDestroyed();
-
-           // _anim.SetTrigger("OnEnemyDeath");
-           // Destroy(this.gameObject, 1.2f);
+                      
         }
 
         if (other.tag == "Laser")
         {
 
             Destroy(other.gameObject);
-          //  _anim.SetTrigger("OnEnemyDeath");
-         //   Destroy(other.gameObject, 1.2f);
+          
             if (_player != null)
             {
                _player.AddPoints(10);
@@ -85,6 +134,9 @@ public class Enemy : MonoBehaviour
 
         _speed = 0.2f;
         _anim.SetTrigger("OnEnemyDeath");
+        AudioSource.PlayClipAtPoint(_enemyExplosionClip, transform.position);
+
+        Destroy(GetComponent<Collider2D>());
         Destroy(this.gameObject, 2.5f);
     }
 }

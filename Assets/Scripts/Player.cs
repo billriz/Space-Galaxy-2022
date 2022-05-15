@@ -31,7 +31,10 @@ public class Player : MonoBehaviour
     private bool _isSpeedBoostActive = false;
     [SerializeField]
     private bool _isShieldActive = false;
-
+    [SerializeField]
+    private AudioClip _laserAudioClip;
+    [SerializeField]
+    private AudioClip _powerUpSoundClip;
 
 
     private SpawnManager _spawnManager;
@@ -132,6 +135,8 @@ public class Player : MonoBehaviour
         {
             Instantiate(_laserPrefab, transform.position + new Vector3(0f, .85f, 0f), Quaternion.identity);
         }
+
+        AudioSource.PlayClipAtPoint(_laserAudioClip, transform.position);
 
         _canFireLaser = false;
         StartCoroutine(ReloadTimer());
@@ -238,9 +243,14 @@ public class Player : MonoBehaviour
                 break;
 
 
-        }
-        
+        }   
 
+    }
+
+    public void  PowerUpSound()
+    {
+
+        AudioSource.PlayClipAtPoint(_powerUpSoundClip, transform.position);
 
     }
 }

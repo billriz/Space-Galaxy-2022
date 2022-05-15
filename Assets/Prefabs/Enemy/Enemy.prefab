@@ -48,6 +48,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 4
+  _enemyExplosionClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
+  _enemyLaserPrefab: {fileID: 8640025910970107070, guid: 0829668954964464598af5d83675b591,
+    type: 3}
 --- !u!212 &3978370575017837221
 SpriteRenderer:
   m_ObjectHideFlags: 0
