@@ -7,7 +7,7 @@ public class PowerUps : MonoBehaviour
 
     private float _speed = 3.5f;
     [SerializeField]
-    private int _powerUpID; // 0 = Triple Shot 1 = Speed Boost 2 = Shield
+    private int _powerUpID; // 0 = Triple Shot 1 = Speed Boost 2 = Shield 3 = Recharge Laser
 
        
     
@@ -53,6 +53,10 @@ public class PowerUps : MonoBehaviour
                     case 2:
                         player.ShieldActive();
                         break;
+                    case 3:
+                        player.AddLasers();
+                        break;
+
 
                     default:
                         break;

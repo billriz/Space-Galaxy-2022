@@ -191,6 +191,12 @@ public class Player : MonoBehaviour
 
     }
 
+    public void AddLasers()
+    {
+        _ammoCount += 15;
+        _uIManager.UpdateAmmoCount(_ammoCount);
+        
+    }
 
 
     public void TripleShotActive()
