@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speedboost = 1.0f;
 
+    private int _hits;
+
     [SerializeField]
     private bool _isTripleShootActive = false;
     [SerializeField]
@@ -42,6 +44,10 @@ public class Player : MonoBehaviour
     private SpawnManager _spawnManager;
 
     private UIManager _uIManager;
+    [SerializeField]
+    private SpriteRenderer _shieldstrength;
+
+
 
 
 
@@ -149,6 +155,9 @@ public class Player : MonoBehaviour
 
         if (_isShieldActive == true)
         {
+            _hits += 1;
+            ShieldStrength(_hits);
+
             return;
         }
         else
@@ -208,17 +217,9 @@ public class Player : MonoBehaviour
     {
         _isShieldActive = true;
         _playerShield.SetActive(true);
-        StartCoroutine(ShieldCoolDown());
-
+      
     }
-
-    IEnumerator ShieldCoolDown()
-    {
-        yield return new WaitForSeconds(8.0f);
-        _isShieldActive = false;
-        _playerShield.SetActive(false);
-
-    }
+   
 
     void VisualDamage()
     {
@@ -271,5 +272,33 @@ public class Player : MonoBehaviour
             _speedboost = 1.0f;
 
         }
+    }
+
+    void ShieldStrength(int hits)
+    {
+
+        switch(hits)
+        {
+
+            case 0:
+                break;
+            case 1:
+                _shieldstrength.color = new Color(1, 1, 1, .50f);
+                break;
+            case 2:
+                _shieldstrength.color = new Color(1, 1, 1, .10f);
+                break;
+            case 3:
+                _isShieldActive = false;
+                _hits = 0;
+                _playerShield.SetActive(false);
+                _shieldstrength.color = new Color(1, 1, 1, 1);
+                break;
+            default:
+                break;
+
+
+        }
+
     }
 }

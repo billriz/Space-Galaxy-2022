@@ -56,10 +56,8 @@ public class PowerUps : MonoBehaviour
 
                     default:
                         break;
-
                            
                 }   
-
                 
                 Destroy(this.gameObject);
             }
