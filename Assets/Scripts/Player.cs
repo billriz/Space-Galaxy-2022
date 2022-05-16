@@ -183,6 +183,28 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void RepairDamage()
+    {
+
+        if (_lives < 3)
+        {
+            _lives++;
+            _uIManager.UpdateLives(_lives);
+            if (_visualDamge[0].activeSelf)
+            {
+                _visualDamge[0].SetActive(false);
+
+            }
+            else
+            {
+                _visualDamge[1].SetActive(false);
+            }
+            
+
+        }
+
+    }
+
     public void AddPoints(int points)
     {
 
