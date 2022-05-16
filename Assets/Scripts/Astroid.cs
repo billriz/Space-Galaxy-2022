@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Astroid : MonoBehaviour
 {
-    [SerializeField]
-    private float _speed = 1.5f;
+   
     [SerializeField]
     private GameObject _explosionPrefab;
 
