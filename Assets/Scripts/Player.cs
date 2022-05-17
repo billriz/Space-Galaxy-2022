@@ -49,6 +49,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private SpriteRenderer _shieldstrength;
 
+    private CameraShake _cameraShake;
+
 
 
 
@@ -71,6 +73,12 @@ public class Player : MonoBehaviour
         {
             Debug.Log("UI Manager is NULL");
 
+        }
+
+        _cameraShake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
+        if (_cameraShake == null)
+        {
+            Debug.Log("Camera Shake is Null");
         }
 
         _ammoCount = 15;
@@ -171,6 +179,7 @@ public class Player : MonoBehaviour
         {
             _lives--;
             _uIManager.UpdateLives(_lives);
+            StartCoroutine(_cameraShake.Shake(0.5f, .15f));
             VisualDamage();
         }
 
