@@ -14,6 +14,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private float _spawnRate = 5f;
 
+    private int _randomPowerUp;
+
 
     private bool _stopSpawning = false;
     
@@ -48,12 +50,23 @@ public class SpawnManager : MonoBehaviour
         {       
 
             Vector3 PosToSpawn = new Vector3(Random.Range(-8f, 8f), 7.2f, 0f);
-            int randomPowerUp = Random.Range(0, 5);
-            Instantiate(_powerUps[randomPowerUp], PosToSpawn, Quaternion.identity);
+            _randomPowerUp = Random.Range(0, 6);
+            if (_randomPowerUp == 5 && Random.value >= .85f)
+            {
+                _randomPowerUp = 5;
+                
+            }
+            else
+            {
+                _randomPowerUp = Random.Range(0, 5);
+            }
+                        
+            Instantiate(_powerUps[_randomPowerUp], PosToSpawn, Quaternion.identity);
             yield return new WaitForSeconds(Random.Range(3, 8));
 
         }
     }
+
 
     public void OnPlayerDeath()
     {

@@ -27,6 +27,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speedboost = 1.0f;
 
+    private float _angle = 100;
+
     private int _hits;
 
     [SerializeField]
@@ -35,6 +37,8 @@ public class Player : MonoBehaviour
     private bool _isSpeedBoostActive = false;
     [SerializeField]
     private bool _isShieldActive = false;
+
+    private bool _isPhotonBlastActive = false;
 
     private bool _isThrusterActive;
     [SerializeField]
@@ -150,6 +154,20 @@ public class Player : MonoBehaviour
         {
             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
         }
+        else if (_isPhotonBlastActive == true)
+        {
+           
+            for (int i = 0; i < 9; i++)
+            {
+                _angle = _angle - 20;
+                GameObject photonBlast = Instantiate(_laserPrefab, transform.position, Quaternion.Euler(0, 0, _angle));
+
+            }
+
+            _angle = 100;
+
+
+        }
         else
         {
             Instantiate(_laserPrefab, transform.position + new Vector3(0f, .85f, 0f), Quaternion.identity);
@@ -262,6 +280,20 @@ public class Player : MonoBehaviour
         _isShieldActive = true;
         _playerShield.SetActive(true);
       
+    }
+
+    public void PhotonBlastActive()
+    {
+
+        _isPhotonBlastActive = true;
+        StartCoroutine(PhotonBlastCoolDown());
+
+    }
+
+    IEnumerator PhotonBlastCoolDown()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _isPhotonBlastActive = false;
     }
    
 
