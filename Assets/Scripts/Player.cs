@@ -27,6 +27,13 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speedboost = 1.0f;
 
+
+    private float _thrusterCharge = 100f;
+    private float _thrusterUseRate = 20.0f;
+    private float _thrusterChargeRate = 2.5f;
+    
+
+
     private float _angle = 100;
 
     private int _hits;
@@ -104,13 +111,18 @@ public class Player : MonoBehaviour
 
         }
 
-        if (Input.GetKey(KeyCode.LeftShift)) 
+        if (Input.GetKey(KeyCode.LeftShift) && _thrusterCharge > 0.0f) 
         {
             _isThrusterActive = true;
+            UseThrusterFuel();
         }
         else
         {
             _isThrusterActive = false;
+            if (_thrusterCharge < 100.0f)
+            {
+                GenerateThrusterFuel();
+            }
         }
 
     }
@@ -348,6 +360,21 @@ public class Player : MonoBehaviour
             _speedboost = 1.0f;
 
         }
+    }
+
+    void UseThrusterFuel()
+    {
+
+        _thrusterCharge = Mathf.MoveTowards(_thrusterCharge, 0.0f, _thrusterUseRate * Time.deltaTime);
+        _uIManager.UpdateThrusterCharge(_thrusterCharge);
+        
+
+    }
+
+    void GenerateThrusterFuel()
+    {
+        _thrusterCharge = Mathf.MoveTowards(_thrusterCharge, 100.0f, _thrusterChargeRate * Time.deltaTime);
+        _uIManager.UpdateThrusterCharge(_thrusterCharge);
     }
 
     void ShieldStrength(int hits)

@@ -19,6 +19,8 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private Sprite[] _livesSprites;
+    [SerializeField]
+    private Slider _thrusterSlider;
 
 
     private GameManager _gameManager;
@@ -66,6 +68,12 @@ public class UIManager : MonoBehaviour
 
         _ammoCountText.text = "Ammo: " + Ammo.ToString();
 
+    }
+
+    public void UpdateThrusterCharge(float thrusterCharge)
+    {
+
+        _thrusterSlider.value = thrusterCharge;
     }
 
     void GameOverSequence()
