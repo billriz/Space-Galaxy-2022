@@ -59,10 +59,10 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void UpdateAmmoCount(int Ammo)
+    public void UpdateAmmoCount(int Ammo, int Max)
     {
 
-        _ammoCountText.text = "Ammo: " + Ammo.ToString();
+        _ammoCountText.text = "Ammo: " + Ammo.ToString() + " / " + Max.ToString();
 
     }
 

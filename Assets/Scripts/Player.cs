@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     private int _score;
 
     private int _ammoCount;
+    private int _ammoMax = 50;
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
@@ -92,7 +93,7 @@ public class Player : MonoBehaviour
         }
 
         _ammoCount = 15;
-        _uIManager.UpdateAmmoCount(_ammoCount);
+        _uIManager.UpdateAmmoCount(_ammoCount, _ammoMax);
 
        
 
@@ -189,7 +190,7 @@ public class Player : MonoBehaviour
         AudioSource.PlayClipAtPoint(_laserAudioClip, transform.position);
 
         _ammoCount -= 1;
-        _uIManager.UpdateAmmoCount(_ammoCount);
+        _uIManager.UpdateAmmoCount(_ammoCount, _ammoMax);
 
         _canFireLaser = false;
         StartCoroutine(ReloadTimer());
@@ -256,7 +257,11 @@ public class Player : MonoBehaviour
     public void AddLasers()
     {
         _ammoCount += 15;
-        _uIManager.UpdateAmmoCount(_ammoCount);
+        if (_ammoCount >= _ammoMax)
+        {
+            _ammoCount = _ammoMax;
+        }
+        _uIManager.UpdateAmmoCount(_ammoCount, _ammoMax);
         
     }
 

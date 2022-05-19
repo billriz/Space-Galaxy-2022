@@ -47,7 +47,7 @@ public class Enemy : MonoBehaviour
 
         StartCoroutine(FireControlRoutine());
 
-        if (Random.value >= .8f)
+        if (Random.value >= .6f)
         {
             _canMoveAtAngle = true;
 
