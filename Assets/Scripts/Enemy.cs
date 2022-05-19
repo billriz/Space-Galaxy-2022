@@ -24,6 +24,9 @@ public class Enemy : MonoBehaviour
 
     private Animator _anim;
 
+    private Vector3 _direction;
+    private bool _canMoveAtAngle;
+
     
     
     // Start is called before the first frame update
@@ -43,6 +46,21 @@ public class Enemy : MonoBehaviour
         }
 
         StartCoroutine(FireControlRoutine());
+
+        if (Random.value >= .8f)
+        {
+            _canMoveAtAngle = true;
+
+            if (transform.position.x > 0.0f)
+            {
+                _direction = Vector3.left;
+            }
+            else
+            {
+                _direction = Vector3.right;
+            }
+        }
+
     }
 
     // Update is called once per frame
@@ -63,6 +81,13 @@ public class Enemy : MonoBehaviour
     void CalculatMovement()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
+
+        if (_canMoveAtAngle == true)
+        {
+
+            transform.Translate(_direction * _speed * Time.deltaTime);
+        }
+        
 
         if (transform.position.y <= -7.1f)
         {

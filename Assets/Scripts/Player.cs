@@ -62,6 +62,8 @@ public class Player : MonoBehaviour
 
     private CameraShake _cameraShake;
 
+    
+
 
 
 
@@ -91,6 +93,8 @@ public class Player : MonoBehaviour
 
         _ammoCount = 15;
         _uIManager.UpdateAmmoCount(_ammoCount);
+
+       
 
     }
 
