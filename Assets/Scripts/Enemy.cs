@@ -17,6 +17,10 @@ public class Enemy : MonoBehaviour
     private GameObject _enemyLaserPrefab;
     [SerializeField]
     private AudioClip _laserSoundClip;
+    [SerializeField]
+    private GameObject _EnemyShield;
+
+    private bool _isEnemyDestroyed;
 
 
 
@@ -59,6 +63,12 @@ public class Enemy : MonoBehaviour
             {
                 _direction = Vector3.right;
             }
+        }
+
+        if (Random.value >= .85f)
+        {
+
+            _EnemyShield.SetActive(true);
         }
 
     }
@@ -104,6 +114,7 @@ public class Enemy : MonoBehaviour
         _canFire = false;
         GameObject enemyLaser = Instantiate(_enemyLaserPrefab, transform.position, Quaternion.identity);
         Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+        AudioSource.PlayClipAtPoint(_laserSoundClip, transform.position);
 
         for (int i = 0; i < lasers.Length; i++)
         {
@@ -119,7 +130,11 @@ public class Enemy : MonoBehaviour
     {
         _fireRate = Random.Range(3.0f, 7.0f);
         yield return new WaitForSeconds(_fireRate);
-        _canFire = true;
+        if (_isEnemyDestroyed == false)
+        {
+            _canFire = true;
+        }
+        
 
     }
 
@@ -135,7 +150,17 @@ public class Enemy : MonoBehaviour
                 _player.Damage();
             }
 
-            EnemyDestroyed();
+            if (_EnemyShield.activeSelf)
+            {
+                _EnemyShield.SetActive(true);
+                return;
+            }
+            else
+            {
+               
+                EnemyDestroyed();
+
+            }            
                       
         }
 
@@ -143,13 +168,25 @@ public class Enemy : MonoBehaviour
         {
 
             Destroy(other.gameObject);
-          
-            if (_player != null)
-            {
-               _player.AddPoints(10);
-            }
 
-            EnemyDestroyed();
+            if (_EnemyShield.activeSelf)
+            {
+                _EnemyShield.SetActive(false);
+                return;
+
+            }
+            else
+            {
+                
+                if (_player != null)
+                {
+                    _player.AddPoints(10);
+                }
+
+                EnemyDestroyed();
+
+            }          
+           
         }
 
     }
@@ -158,7 +195,7 @@ public class Enemy : MonoBehaviour
     void EnemyDestroyed()
     {
 
-        _canFire = false;
+        _isEnemyDestroyed = true;
         _speed = 0.2f;
         _anim.SetTrigger("OnEnemyDeath");
         AudioSource.PlayClipAtPoint(_enemyExplosionClip, transform.position);

@@ -239,8 +239,7 @@ public class Player : MonoBehaviour
             else
             {
                 _visualDamge[1].SetActive(false);
-            }
-            
+            }           
 
         }
 
