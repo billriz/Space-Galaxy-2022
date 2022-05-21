@@ -9,13 +9,31 @@ public class PowerUps : MonoBehaviour
     [SerializeField]
     private int _powerUpID; // 0 = Triple Shot 1 = Speed Boost 2 = Shield 3 = Recharge Laser 4 = Repair 5 = Photon Blast
 
+
+    private GameObject _player;
+
+    private void Start()
+    {
        
-    
-   
+
+    }
+
+
+
+
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        if (Input.GetKey(KeyCode.C))
+        {
+            PlayerCollectingPowerUps();
+        }
+        else
+        {
+
+            transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        }  
+        
 
         if (transform.position.y < -8.0f)
         {
@@ -71,5 +89,15 @@ public class PowerUps : MonoBehaviour
             }
             
         }
+    }
+
+    void PlayerCollectingPowerUps()
+    {
+
+        _player = GameObject.Find("Player");
+        Vector3 _direction = this.transform.position - _player.transform.position;
+        _direction = _direction.normalized;
+        this.transform.position -= _direction * Time.deltaTime * (_speed * 3);
+
     }
 }
