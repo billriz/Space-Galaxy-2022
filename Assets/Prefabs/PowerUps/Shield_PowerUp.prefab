@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2838519685225603391}
   - component: {fileID: 3574003354568570655}
   - component: {fileID: 2135739923290409223}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Shield_PowerUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,6 +145,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _powerUpID: 2
+  _explosionPrefab: {fileID: 3739266191035117308, guid: ec682e47dd37d2642bed19a50e1d7bd0,
+    type: 3}
 --- !u!95 &2135739923290409223
 Animator:
   serializedVersion: 3

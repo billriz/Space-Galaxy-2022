@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7586133960530964111}
   - component: {fileID: 7546720714607945624}
   - component: {fileID: 7118429708907402627}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Triple_Shot_Powerup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,6 +97,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7bf63d6f527db44c911a70d151641e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _powerUpID: 0
+  _explosionPrefab: {fileID: 3739266191035117308, guid: ec682e47dd37d2642bed19a50e1d7bd0,
+    type: 3}
 --- !u!50 &7586133960530964111
 Rigidbody2D:
   serializedVersion: 4

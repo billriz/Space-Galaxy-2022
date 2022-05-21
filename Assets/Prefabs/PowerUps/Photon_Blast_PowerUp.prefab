@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1562595458896189726}
   - component: {fileID: 1562595458896189697}
   - component: {fileID: 1562595458896189696}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Photon_Blast_PowerUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,3 +144,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _powerUpID: 5
+  _explosionPrefab: {fileID: 3739266191035117308, guid: ec682e47dd37d2642bed19a50e1d7bd0,
+    type: 3}

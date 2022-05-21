@@ -31,6 +31,9 @@ public class Enemy : MonoBehaviour
     private Vector3 _direction;
     private bool _canMoveAtAngle;
 
+    private float _castRadius;
+
+    private float _castDistance;
     
     
     // Start is called before the first frame update
@@ -85,6 +88,8 @@ public class Enemy : MonoBehaviour
             FireLaser();
 
         }
+
+        CheckForPowerUps();
 
     }
 
@@ -187,6 +192,19 @@ public class Enemy : MonoBehaviour
 
             }          
            
+        }
+
+    }
+
+    void CheckForPowerUps()
+    {
+
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, _castRadius, Vector2.down, _castDistance, LayerMask.GetMask("PowerUps"));
+
+        if (hit.collider != null && _canFire == true && _isEnemyDestroyed == false)
+        {
+
+            FireLaser();
         }
 
     }

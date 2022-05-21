@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3246810694258611771}
   - component: {fileID: 3246810694258611770}
   - component: {fileID: 3246810694258611773}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Repair_PowerUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,6 +97,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _powerUpID: 4
+  _explosionPrefab: {fileID: 3739266191035117308, guid: ec682e47dd37d2642bed19a50e1d7bd0,
+    type: 3}
 --- !u!61 &3246810694258611770
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3488535610345051980}
   - component: {fileID: 7377420375937135937}
   - component: {fileID: 6648598740318973223}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Recharge_Laser_PowerUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,6 +117,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _powerUpID: 3
+  _explosionPrefab: {fileID: 3739266191035117308, guid: ec682e47dd37d2642bed19a50e1d7bd0,
+    type: 3}
 --- !u!50 &7377420375937135937
 Rigidbody2D:
   serializedVersion: 4

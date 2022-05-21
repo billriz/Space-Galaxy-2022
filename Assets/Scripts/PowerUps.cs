@@ -12,6 +12,9 @@ public class PowerUps : MonoBehaviour
 
     private GameObject _player;
 
+    [SerializeField]
+    private GameObject _explosionPrefab;
+
     private void Start()
     {
        
@@ -89,7 +92,20 @@ public class PowerUps : MonoBehaviour
             }
             
         }
+
+        if (other.tag == "Laser")
+        {
+
+            Destroy(other.gameObject);
+            GameObject explosion = Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+            explosion.transform.localScale = new Vector3(.5f, .5f, .5f);
+            Destroy(this.gameObject);
+        }
     }
+
+   
+
+
 
     void PlayerCollectingPowerUps()
     {
