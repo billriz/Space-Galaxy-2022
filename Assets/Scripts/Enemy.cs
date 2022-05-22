@@ -6,15 +6,23 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 4.0f;
-
+    [SerializeField]
+    private int EnemyID; // 0 = Normal 1 = Smart
+    
     private float _fireRate;
-
+    [SerializeField]
     private bool _canFire;
 
+    private bool _canFireAtPlayer = true;
+    private bool _canFireAtPowerUp = true;
+
+    
     [SerializeField]
     private AudioClip _enemyExplosionClip;
     [SerializeField]
     private GameObject _enemyLaserPrefab;
+
+    
     [SerializeField]
     private AudioClip _laserSoundClip;
     [SerializeField]
@@ -30,10 +38,10 @@ public class Enemy : MonoBehaviour
 
     private Vector3 _direction;
     private bool _canMoveAtAngle;
+        
+    private float _castDistance = 10.0f;
 
-    private float _castRadius;
-
-    private float _castDistance;
+    
     
     
     // Start is called before the first frame update
@@ -86,10 +94,17 @@ public class Enemy : MonoBehaviour
         {
 
             FireLaser();
-
+            
         }
 
         CheckForPowerUps();
+
+        if (EnemyID ==1)
+        {
+
+            CheckForPlayer();
+        }
+       
 
     }
 
@@ -108,6 +123,14 @@ public class Enemy : MonoBehaviour
         {
             float Randomx = Random.Range(-9f, 9f);
             transform.position = new Vector3(Randomx, 7.5f, 0);
+            if (transform.position.x > 0.0f)
+            {
+                _direction = Vector3.left;
+            }
+            else
+            {
+                _direction = Vector3.right;
+            }
 
         }
 
@@ -115,8 +138,9 @@ public class Enemy : MonoBehaviour
 
     void FireLaser()
     {
-       
-        _canFire = false;
+        
+        _canFire = false;      
+        
         GameObject enemyLaser = Instantiate(_enemyLaserPrefab, transform.position, Quaternion.identity);
         Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
         AudioSource.PlayClipAtPoint(_laserSoundClip, transform.position);
@@ -131,19 +155,76 @@ public class Enemy : MonoBehaviour
 
     }
 
+    void FireAtPowerUps()
+    {
+        _canFireAtPowerUp = false;
+
+        GameObject enemyLaser = Instantiate(_enemyLaserPrefab, transform.position, Quaternion.identity);
+        Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+        AudioSource.PlayClipAtPoint(_laserSoundClip, transform.position);
+
+        for (int i = 0; i < lasers.Length; i++)
+        {
+
+            lasers[i].SetEnemyLaser();
+        }
+
+        StartCoroutine(FireAtPowerUpControlRoutine());
+    }
+
+    void FireSmartLaser()
+    {
+        _canFireAtPlayer = false;
+        GameObject enemySmartLaser = Instantiate(_enemyLaserPrefab, transform.position + new Vector3(0f, 2.54f, 0f), Quaternion.identity);
+        Laser[] lasers = enemySmartLaser.GetComponentsInChildren<Laser>();
+        AudioSource.PlayClipAtPoint(_laserSoundClip, transform.position);
+
+        for (int i = 0; i < lasers.Length; i++)
+        {
+
+            lasers[i].SetSmartEnemyLaser();
+        }
+
+        StartCoroutine(SmartLaserContolRoutine());
+
+    }
+
     IEnumerator FireControlRoutine()
     {
+
         _fireRate = Random.Range(3.0f, 7.0f);
         yield return new WaitForSeconds(_fireRate);
         if (_isEnemyDestroyed == false)
         {
+
             _canFire = true;
         }
-        
 
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    IEnumerator FireAtPowerUpControlRoutine()
+    {
+
+        yield return new WaitForSeconds(2.0f);
+        if (_isEnemyDestroyed == false)
+        {
+
+            _canFireAtPowerUp = true;
+        }
+
+    }
+
+    IEnumerator SmartLaserContolRoutine()
+    {
+
+        yield return new WaitForSeconds(2.0F);
+        if (_isEnemyDestroyed == false)
+        {
+            _canFireAtPlayer = true;
+        }
+    }
+
+        private void OnTriggerEnter2D(Collider2D other)
     {
         
         if (other.tag == "Player")
@@ -199,16 +280,43 @@ public class Enemy : MonoBehaviour
     void CheckForPowerUps()
     {
 
-        RaycastHit2D hit = Physics2D.CircleCast(transform.position, _castRadius, Vector2.down, _castDistance, LayerMask.GetMask("PowerUps"));
-
-        if (hit.collider != null && _canFire == true && _isEnemyDestroyed == false)
+       
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, _castDistance, LayerMask.GetMask("PowerUps"));
+        
+        if (hit.collider != null)
         {
-
-            FireLaser();
+            Debug.Log("found Power Up");
+        }
+               
+        
+        
+        if (hit.collider != null && _canFireAtPowerUp == true && _isEnemyDestroyed == false)
+        {
+            Debug.Log("fired at PowerUp");
+            FireAtPowerUps();
         }
 
     }
 
+    void CheckForPlayer()
+    {
+       
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, _castDistance, LayerMask.GetMask("Player"));
+        
+        if (hit.collider != null)
+        {
+            Debug.Log("Found Player");
+        }
+        
+        if (hit.collider != null && _canFireAtPlayer == true && _isEnemyDestroyed == false)
+        {
+            Debug.Log("fired at Player");
+            FireSmartLaser();
+           
+        } 
+    }
+
+  
 
     void EnemyDestroyed()
     {

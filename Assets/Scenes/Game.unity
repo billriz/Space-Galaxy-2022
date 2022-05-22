@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 165840298}
   - component: {fileID: 165840300}
   - component: {fileID: 165840299}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Right_Damage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1238,75 +1238,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 752646469}
   m_CullTransparentMesh: 0
---- !u!1001 &827843617
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1098183462293343491, guid: f4a44483ffc6ca243bd7feaecb9fc996,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 4.29
-      objectReference: {fileID: 0}
-    - target: {fileID: 1098183462293343491, guid: f4a44483ffc6ca243bd7feaecb9fc996,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.48
-      objectReference: {fileID: 0}
-    - target: {fileID: 1098183462293343491, guid: f4a44483ffc6ca243bd7feaecb9fc996,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1098183462293343491, guid: f4a44483ffc6ca243bd7feaecb9fc996,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1098183462293343491, guid: f4a44483ffc6ca243bd7feaecb9fc996,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1098183462293343491, guid: f4a44483ffc6ca243bd7feaecb9fc996,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1098183462293343491, guid: f4a44483ffc6ca243bd7feaecb9fc996,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1098183462293343491, guid: f4a44483ffc6ca243bd7feaecb9fc996,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 1098183462293343491, guid: f4a44483ffc6ca243bd7feaecb9fc996,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1098183462293343491, guid: f4a44483ffc6ca243bd7feaecb9fc996,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1098183462293343491, guid: f4a44483ffc6ca243bd7feaecb9fc996,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6790047070490993279, guid: f4a44483ffc6ca243bd7feaecb9fc996,
-        type: 3}
-      propertyPath: m_Name
-      value: Shield_PowerUp
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f4a44483ffc6ca243bd7feaecb9fc996, type: 3}
 --- !u!1 &1219838476
 GameObject:
   m_ObjectHideFlags: 0
@@ -1694,8 +1625,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b066459302b19d046bcbfe16ceaa302a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefab: {fileID: 3566004377898292162, guid: 80f836fb60a456f4aa3953351b419fa0,
-    type: 3}
+  _enemyPrefab:
+  - {fileID: 3566004377898292162, guid: 80f836fb60a456f4aa3953351b419fa0, type: 3}
+  - {fileID: 3053236070902149933, guid: 51a7e36493aae034abf6ad25a6e980af, type: 3}
   _enemyContainer: {fileID: 619358992}
   _powerUps:
   - {fileID: 8847338874422684773, guid: 2190d47e9deef584e8383279ac9ad3f7, type: 3}
@@ -1732,7 +1664,7 @@ GameObject:
   - component: {fileID: 1641288151}
   - component: {fileID: 1641288150}
   - component: {fileID: 1641288149}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1875,7 +1807,7 @@ GameObject:
   - component: {fileID: 1775787069}
   - component: {fileID: 1775787071}
   - component: {fileID: 1775787070}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Thruster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1976,7 +1908,7 @@ GameObject:
   - component: {fileID: 1884084783}
   - component: {fileID: 1884084785}
   - component: {fileID: 1884084784}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Left_Damage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2229,7 +2161,7 @@ GameObject:
   - component: {fileID: 1973286752}
   - component: {fileID: 1973286751}
   - component: {fileID: 1973286750}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}

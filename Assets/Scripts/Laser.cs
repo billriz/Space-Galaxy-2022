@@ -11,6 +11,8 @@ public class Laser : MonoBehaviour
 
     private bool _isEnemyLaser = false;
 
+    private bool _isSmartEnemyLaser = false;
+
        
     
 
@@ -80,9 +82,14 @@ public class Laser : MonoBehaviour
 
     }
 
+    public void SetSmartEnemyLaser()
+    {
+        _isSmartEnemyLaser = true;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player" && _isEnemyLaser == true)
+        if (other.tag == "Player" && _isEnemyLaser == true || _isSmartEnemyLaser == true)
         {
             Player player = other.GetComponent<Player>();
             if ( player != null)
@@ -90,6 +97,8 @@ public class Laser : MonoBehaviour
 
                 player.Damage();
             }
+
+            Destroy(this.gameObject);
 
         }
     }
