@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _speed = 4.0f;
     [SerializeField]
-    private int EnemyID; // 0 = Normal 1 = Smart
+    private int EnemyID; // 0 = Normal 1 = Smart 2 = Aggresive
     
     private float _fireRate;
     [SerializeField]
@@ -40,6 +40,14 @@ public class Enemy : MonoBehaviour
     private bool _canMoveAtAngle;
         
     private float _castDistance = 10.0f;
+
+    private float _playerDistance = 4.0f;
+
+    private float _distanceToPlayer;
+
+
+    private float _ramMultiplier = 6.0f;
+
 
     
     
@@ -103,6 +111,12 @@ public class Enemy : MonoBehaviour
         {
 
             CheckForPlayer();
+        }
+
+        if (EnemyID == 2)
+        {
+
+            RammingPlayer();
         }
        
 
@@ -314,6 +328,22 @@ public class Enemy : MonoBehaviour
             FireSmartLaser();
            
         } 
+    }
+
+    void RammingPlayer()
+    {
+
+        _distanceToPlayer = Vector2.Distance(_player.transform.position, this.transform.position);
+
+        if (_distanceToPlayer <= _playerDistance)
+        {
+
+            Vector3 dir = this.transform.position - _player.transform.position;
+            dir = dir.normalized;
+            this.transform.position -= dir * Time.deltaTime * (_speed * _ramMultiplier);
+
+        }
+
     }
 
   
