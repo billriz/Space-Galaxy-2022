@@ -1628,13 +1628,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyContainer: {fileID: 619358992}
-  _powerUps:
-  - {fileID: 8847338874422684773, guid: 2190d47e9deef584e8383279ac9ad3f7, type: 3}
-  - {fileID: 7952714383386387268, guid: 790a8046d0265324596425d6934ccdc3, type: 3}
-  - {fileID: 6790047070490993279, guid: f4a44483ffc6ca243bd7feaecb9fc996, type: 3}
-  - {fileID: 4957844074746908384, guid: da8919c05754fcc4cbf7866187d9e2ea, type: 3}
-  - {fileID: 3246810694258611772, guid: efcf9d20105a23c4fb58ccc20ac85e41, type: 3}
-  - {fileID: 1562595458896189699, guid: 9d7b5030a5b01b04bbbe3ed44aab19fd, type: 3}
   _spawnRate: 5
   _enemyWaves:
   - Name: Wave 1
@@ -1663,6 +1656,31 @@ MonoBehaviour:
     - {fileID: 6486396487118887732, guid: 647b36a42f0eeb84698b6c8def14166e, type: 3}
     EnemyCount: 1
     SpawnRate: 1
+  powerUps:
+  - Name: Rechare Laser
+    PowerUpToSpawn: {fileID: 4957844074746908384, guid: da8919c05754fcc4cbf7866187d9e2ea,
+      type: 3}
+    SpawnWeight: 70
+  - Name: Speed
+    PowerUpToSpawn: {fileID: 7952714383386387268, guid: 790a8046d0265324596425d6934ccdc3,
+      type: 3}
+    SpawnWeight: 50
+  - Name: Triple Shoot
+    PowerUpToSpawn: {fileID: 8847338874422684773, guid: 2190d47e9deef584e8383279ac9ad3f7,
+      type: 3}
+    SpawnWeight: 40
+  - Name: Shield
+    PowerUpToSpawn: {fileID: 6790047070490993279, guid: f4a44483ffc6ca243bd7feaecb9fc996,
+      type: 3}
+    SpawnWeight: 30
+  - Name: Repair
+    PowerUpToSpawn: {fileID: 3246810694258611772, guid: efcf9d20105a23c4fb58ccc20ac85e41,
+      type: 3}
+    SpawnWeight: 10
+  - Name: Photon Blast
+    PowerUpToSpawn: {fileID: 1562595458896189699, guid: 9d7b5030a5b01b04bbbe3ed44aab19fd,
+      type: 3}
+    SpawnWeight: 5
 --- !u!4 &1356645516
 Transform:
   m_ObjectHideFlags: 0
@@ -1890,7 +1908,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1641288148}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 9.41, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 1973286752}

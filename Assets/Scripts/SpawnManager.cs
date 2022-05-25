@@ -5,14 +5,11 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
 
-   // [SerializeField]
-  //  private GameObject [] _enemyPrefab;
-
-    
+      
     [SerializeField]
     private GameObject _enemyContainer;
-    [SerializeField]
-    private GameObject[] _powerUps;
+  //  [SerializeField]
+  //  private GameObject[] _powerUps;
     [SerializeField]
     private float _spawnRate = 5f;
 
@@ -26,6 +23,19 @@ public class SpawnManager : MonoBehaviour
     private int _currentWave = 0;
 
     private UIManager _uiManager;
+
+    [System.Serializable]
+    public struct PowerUps
+    {
+       public string Name;
+       public GameObject PowerUpToSpawn;
+       public int SpawnWeight;
+
+    }
+    [SerializeField]
+    private PowerUps[] powerUps;
+
+    private int _totalPowerUpWeight;
 
 
 
@@ -41,7 +51,12 @@ public class SpawnManager : MonoBehaviour
         _uiManager.UpdateWaves(_enemyWaves[_currentWave].Name);
 
         
+        foreach (PowerUps PowerUpsData in powerUps)
+        {
 
+            _totalPowerUpWeight += PowerUpsData.SpawnWeight;
+
+        }
     }
 
 
@@ -81,19 +96,35 @@ public class SpawnManager : MonoBehaviour
         while (_stopSpawning == false)
         {       
 
-            Vector3 PosToSpawn = new Vector3(Random.Range(-8f, 8f), 7.2f, 0f);
-            _randomPowerUp = Random.Range(0, 6);
-            if (_randomPowerUp == 5 && Random.value >= .85f)
+            Vector3 PosToSpawn = new Vector3(Random.Range(-9.4f, 9.4f), 7.2f, 0f);
+            //_randomPowerUp = Random.Range(0, 6);
+            int _randomWeight = Random.Range(0, _totalPowerUpWeight);
+            foreach (PowerUps PowerUpsData in powerUps)
             {
-                _randomPowerUp = 5;
-                
+                if (_randomWeight <= PowerUpsData.SpawnWeight)
+                {
+
+                    Instantiate(PowerUpsData.PowerUpToSpawn, PosToSpawn, Quaternion.identity);
+                    break;
+                }
+                else
+                {
+                    _randomWeight -= PowerUpsData.SpawnWeight;
+                }
+
+
             }
-            else
-            {
-                _randomPowerUp = Random.Range(0, 5);
-            }
+         //   if (_randomPowerUp == 5 && Random.value >= .85f)
+         //   {
+         //       _randomPowerUp = 5;
+         //       
+         //    }
+         //   else
+         //   {
+         //       _randomPowerUp = Random.Range(0, 5);
+         //   }
                         
-            Instantiate(_powerUps[_randomPowerUp], PosToSpawn, Quaternion.identity);
+          //  Instantiate(_powerUps[_randomPowerUp], PosToSpawn, Quaternion.identity);
             yield return new WaitForSeconds(Random.Range(3, 8));
 
         }
