@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _speed = 4.0f;
     [SerializeField]
-    private int EnemyID; // 0 = Normal 1 = Smart 2 = Aggresive
+    private int EnemyID; // 0 = Normal 1 = Smart 2 = Aggresive 3 = Dodge
     
     private float _fireRate;
     [SerializeField]
@@ -48,10 +48,16 @@ public class Enemy : MonoBehaviour
 
     private float _ramMultiplier = 6.0f;
 
+    [SerializeField]
+    float LaserCastRadius = .5f;
+    [SerializeField]
+    float LaserCastDistance = 8.0f;
 
-    
-    
-    
+    float DodgeRate = 1.0f;
+
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -118,7 +124,13 @@ public class Enemy : MonoBehaviour
 
             RammingPlayer();
         }
-       
+
+        if (EnemyID == 3)
+        {
+
+            DodgeLaser();
+        }
+        
 
     }
 
@@ -344,6 +356,31 @@ public class Enemy : MonoBehaviour
 
         }
 
+    }
+
+    void DodgeLaser()
+    {
+
+        RaycastHit2D Laserhit = Physics2D.CircleCast(transform.position, LaserCastRadius, Vector2.down, LaserCastDistance, LayerMask.GetMask("Laser"));
+        
+        Debug.DrawRay(transform.position, Vector3.down * LaserCastDistance, Color.red);
+
+        if (Laserhit.collider != null)
+        {
+          
+            if (Laserhit.collider.CompareTag("Laser"))
+            {
+                
+                transform.position = new Vector3(transform.position.x - DodgeRate, transform.position.y, transform.position.z);
+                DodgeRate -= .3f;
+
+                if (DodgeRate <= 0f)
+                {
+                    DodgeRate = .05f;
+                     
+                }
+            }
+        }
     }
 
   
