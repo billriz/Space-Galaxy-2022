@@ -309,16 +309,10 @@ public class Enemy : MonoBehaviour
        
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, _castDistance, LayerMask.GetMask("PowerUps"));
         
-        if (hit.collider != null)
-        {
-            Debug.Log("found Power Up");
-        }
-               
-        
         
         if (hit.collider != null && _canFireAtPowerUp == true && _isEnemyDestroyed == false)
         {
-            Debug.Log("fired at PowerUp");
+            
             FireAtPowerUps();
         }
 

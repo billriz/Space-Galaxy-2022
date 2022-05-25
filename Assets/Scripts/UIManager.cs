@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
     private Text _gameOverText;
     [SerializeField]
     private Text _restartLevelText;
+    [SerializeField]
+    private Text _wavesText;
 
     [SerializeField]
     private Sprite[] _livesSprites;
@@ -71,6 +73,13 @@ public class UIManager : MonoBehaviour
 
         _thrusterSlider.value = thrusterCharge;
     }
+
+    public void UpdateWaves(string WaveName)
+    {
+
+        _wavesText.text = "Current Wave: " + WaveName;
+    }
+    
 
     void GameOverSequence()
     {

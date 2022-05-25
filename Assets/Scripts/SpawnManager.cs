@@ -5,8 +5,8 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
 
-    [SerializeField]
-    private GameObject [] _enemyPrefab;
+   // [SerializeField]
+  //  private GameObject [] _enemyPrefab;
 
     
     [SerializeField]
@@ -20,20 +20,59 @@ public class SpawnManager : MonoBehaviour
 
 
     private bool _stopSpawning = false;
-    
-   
+    [SerializeField]
+    private EnemyWaves[] _enemyWaves;
+
+    private int _currentWave = 0;
+
+    private UIManager _uiManager;
+
+
+
+    void Start ()
+    {
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        if (_uiManager == null)
+        {
+            Debug.LogError("UI Manager on SpawnManager is Null");
+
+        }
+
+        _uiManager.UpdateWaves(_enemyWaves[_currentWave].Name);
+
+        
+
+    }
+
 
     IEnumerator SpawnEnemyRoutine()
     {
                
         while(_stopSpawning == false)
         {
-            float RandomX = Random.Range(-8f, 8f);
-            int RandomEnemy = Random.Range(0, 4);
-            Vector3 posToSpawn = new Vector3(RandomX, 7.2f, 0f);
-            GameObject newEnemy = Instantiate(_enemyPrefab[RandomEnemy], posToSpawn, Quaternion.identity);
-            newEnemy.transform.parent = _enemyContainer.transform;
-            yield return new WaitForSeconds(_spawnRate);
+           
+            for (int i = 0; i < _enemyWaves[_currentWave].EnemyCount; i++)
+            {
+                
+                Vector3 posToSpawn = new Vector3(Random.Range(-8f,8f), 7.2f, 0f);
+                int RandomEnemy = Random.Range(0, _enemyWaves[_currentWave].EnemyToSpawn.Length);               
+                GameObject newEnemy = Instantiate(_enemyWaves[_currentWave].EnemyToSpawn[RandomEnemy], posToSpawn, Quaternion.identity);
+                newEnemy.transform.parent = _enemyContainer.transform;
+
+                yield return new WaitForSeconds(_enemyWaves[_currentWave].SpawnRate);
+            }
+
+            _currentWave++;            
+
+            if (_currentWave > _enemyWaves.Length - 1)
+            {               
+                _stopSpawning = true;
+                _uiManager.UpdateWaves("Waves Completed");
+                break;
+            }
+
+            _uiManager.UpdateWaves(_enemyWaves[_currentWave].Name);
+
         }
     }
 

@@ -14,14 +14,7 @@ public class PowerUps : MonoBehaviour
 
     [SerializeField]
     private GameObject _explosionPrefab;
-
-    private void Start()
-    {
-       
-
-    }
-
-
+    
 
 
     // Update is called once per frame
