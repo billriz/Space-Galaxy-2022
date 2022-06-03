@@ -69,7 +69,7 @@ public class SpawnManager : MonoBehaviour
             for (int i = 0; i < _enemyWaves[_currentWave].EnemyCount; i++)
             {
                 
-                Vector3 posToSpawn = new Vector3(Random.Range(-8f,8f), 7.2f, 0f);
+                Vector3 posToSpawn = new Vector3(Random.Range(-8f,8f), 7.5f, 0f);
                 int RandomEnemy = Random.Range(0, _enemyWaves[_currentWave].EnemyToSpawn.Length);               
                 GameObject newEnemy = Instantiate(_enemyWaves[_currentWave].EnemyToSpawn[RandomEnemy], posToSpawn, Quaternion.identity);
                 newEnemy.transform.parent = _enemyContainer.transform;
@@ -81,7 +81,7 @@ public class SpawnManager : MonoBehaviour
 
             if (_currentWave > _enemyWaves.Length - 1)
             {               
-                _stopSpawning = true;
+              //  _stopSpawning = true;
                 _uiManager.UpdateWaves("Waves Completed");
                 break;
             }
@@ -114,17 +114,7 @@ public class SpawnManager : MonoBehaviour
 
 
             }
-         //   if (_randomPowerUp == 5 && Random.value >= .85f)
-         //   {
-         //       _randomPowerUp = 5;
-         //       
-         //    }
-         //   else
-         //   {
-         //       _randomPowerUp = Random.Range(0, 5);
-         //   }
-                        
-          //  Instantiate(_powerUps[_randomPowerUp], PosToSpawn, Quaternion.identity);
+         
             yield return new WaitForSeconds(Random.Range(3, 8));
 
         }

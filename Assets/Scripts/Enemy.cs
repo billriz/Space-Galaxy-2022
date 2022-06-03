@@ -7,7 +7,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _speed = 4.0f;
     [SerializeField]
-    private int EnemyID; // 0 = Normal 1 = Smart 2 = Aggresive 3 = Dodge
+    private int EnemyID; // 0 = Normal 1 = Smart 2 = Aggresive 3 = Dodge 4 = Boss
+
     
     private float _fireRate;
     [SerializeField]
@@ -21,6 +22,8 @@ public class Enemy : MonoBehaviour
     private AudioClip _enemyExplosionClip;
     [SerializeField]
     private GameObject _enemyLaserPrefab;
+
+
 
     
     [SerializeField]
@@ -76,7 +79,7 @@ public class Enemy : MonoBehaviour
 
         StartCoroutine(FireControlRoutine());
 
-        if (Random.value >= .6f)
+        if (EnemyID != 4 && Random.value >= .6f)
         {
             _canMoveAtAngle = true;
 
@@ -90,7 +93,7 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        if (Random.value >= .85f)
+        if (Random.value >= .85f && EnemyID != 4)
         {
 
             _EnemyShield.SetActive(true);
@@ -158,6 +161,12 @@ public class Enemy : MonoBehaviour
                 _direction = Vector3.right;
             }
 
+        }
+
+        if (EnemyID  == 4)
+        {
+
+            transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, 3.25f, 7.25f), 0f);
         }
 
     }

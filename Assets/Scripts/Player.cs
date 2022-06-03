@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
             Debug.Log("Camera Shake is Null");
         }
 
-        _ammoCount = 15;
+        _ammoCount = 50;
         _uIManager.UpdateAmmoCount(_ammoCount, _ammoMax);
 
        
