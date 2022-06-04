@@ -18,6 +18,8 @@ public class UIManager : MonoBehaviour
     private Text _restartLevelText;
     [SerializeField]
     private Text _wavesText;
+    [SerializeField]
+    private Text _homingLaserCountText;
 
     [SerializeField]
     private Sprite[] _livesSprites;
@@ -64,7 +66,14 @@ public class UIManager : MonoBehaviour
     public void UpdateAmmoCount(int Ammo, int Max)
     {
 
-        _ammoCountText.text = "Ammo: " + Ammo.ToString() + " / " + Max.ToString();
+        _ammoCountText.text = "Laser: " + Ammo.ToString() + " / " + Max.ToString();
+
+    }
+
+    public void UpdateHomingLaserCount(int Homing, int Max)
+    {
+
+        _homingLaserCountText.text = "Homing Laser: " + Homing + " / " + Max;
 
     }
 

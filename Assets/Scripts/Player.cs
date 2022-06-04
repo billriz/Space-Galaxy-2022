@@ -11,10 +11,18 @@ public class Player : MonoBehaviour
 
     private int _ammoCount;
     private int _ammoMax = 50;
+
+    private int _homingLaserCount;
+    private int _homingLaserMax = 3;
+    private int _homingLaserScoreReward = 100;
+    private int _homingLaserScoreCheck;
+
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
     private GameObject _tripleShotPrefab;
+    [SerializeField]
+    private GameObject _homingLaserPrefab;
     [SerializeField]
     private GameObject _playerShield;
     [SerializeField]
@@ -92,8 +100,13 @@ public class Player : MonoBehaviour
             Debug.Log("Camera Shake is Null");
         }
 
-        _ammoCount = 50;
+        _ammoCount = _ammoMax;
+        
         _uIManager.UpdateAmmoCount(_ammoCount, _ammoMax);
+        _uIManager.UpdateHomingLaserCount(_homingLaserCount, _homingLaserMax);
+
+        _homingLaserScoreCheck = _homingLaserScoreReward;
+
 
        
 
@@ -125,6 +138,11 @@ public class Player : MonoBehaviour
             {
                 GenerateThrusterFuel();
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.X) && _homingLaserCount > 0 && _canFireLaser)
+        {
+            FireHomingLaser();
         }
 
     }
@@ -197,6 +215,15 @@ public class Player : MonoBehaviour
 
     }
 
+    void FireHomingLaser()
+    {
+        _canFireLaser = false;
+        Instantiate(_homingLaserPrefab, transform.position + new Vector3(0f, .85f, 0f), Quaternion.identity);
+        _homingLaserCount -= 1;
+        _uIManager.UpdateHomingLaserCount(_homingLaserCount, _homingLaserMax);
+        StartCoroutine(ReloadTimer());
+    }
+
     public void Damage()
     {
 
@@ -250,6 +277,14 @@ public class Player : MonoBehaviour
 
         _score += points;
         _uIManager.UpdateScore(_score);
+
+        if (_score >= _homingLaserScoreCheck && _homingLaserCount < _homingLaserMax)
+        {
+            _homingLaserCount += 1;
+            _uIManager.UpdateHomingLaserCount(_homingLaserCount, _homingLaserMax);
+            _homingLaserScoreCheck += _homingLaserScoreReward;
+
+        }
 
     }
 
