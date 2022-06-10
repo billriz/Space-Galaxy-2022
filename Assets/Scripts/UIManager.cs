@@ -19,7 +19,11 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _wavesText;
     [SerializeField]
+    private Text _wavesFlashText;
+    [SerializeField]
     private Text _homingLaserCountText;
+    [SerializeField]
+    private Text _startWaveText;
 
     [SerializeField]
     private Sprite[] _livesSprites;
@@ -41,6 +45,8 @@ public class UIManager : MonoBehaviour
 
             Debug.Log("Game Manager is NULL");
         }
+
+        _startWaveText.enabled = true;
 
     }
 
@@ -87,6 +93,17 @@ public class UIManager : MonoBehaviour
     {
 
         _wavesText.text = "Current Wave: " + WaveName;
+        _wavesFlashText.text = WaveName;
+        _wavesFlashText.enabled = true;
+        StartCoroutine(WaveFlickerRoutine());
+
+               
+    }
+    public void UpdateVictory()
+    {
+
+        StartCoroutine(VictoryRoutine());
+
     }
     
 
@@ -98,6 +115,11 @@ public class UIManager : MonoBehaviour
         StartCoroutine(GameOverFlickerRoutine());
         _gameManager.GameOver();
 
+    }
+
+    public void GameStartRoutine()
+    {
+        _startWaveText.enabled = false;
     }
 
 
@@ -112,6 +134,33 @@ public class UIManager : MonoBehaviour
 
         }
 
+    }
+
+    IEnumerator WaveFlickerRoutine()
+    {
+        yield return new WaitForSeconds(.5f);
+        _wavesFlashText.enabled = false;
+        yield return new WaitForSeconds(.5f);
+        _wavesFlashText.enabled = true;
+        yield return new WaitForSeconds(.5f);
+        _wavesFlashText.enabled = false;
+
+    }
+
+    IEnumerator VictoryRoutine()
+    {
+        _wavesFlashText.text = "You Are the Winner!!!";
+        _wavesFlashText.enabled = true;
+        _gameManager.GameOver();
+        _restartLevelText.enabled = true;
+        while (true)
+        {
+            yield return new WaitForSeconds(.5f);
+            _wavesFlashText.enabled = false;
+            yield return new WaitForSeconds(.5f);
+            _wavesFlashText.enabled = true;
+
+        }
     }
 
     

@@ -6,17 +6,13 @@ public class SpawnManager : MonoBehaviour
 {
 
       
+    public enum SpawningState {SpawningEnemies, CountingEnemies, GameOver};
+    
     [SerializeField]
     private GameObject _enemyContainer;
-  //  [SerializeField]
-  //  private GameObject[] _powerUps;
     [SerializeField]
     private float _spawnRate = 5f;
-
-    private int _randomPowerUp;
-
-
-    private bool _stopSpawning = false;
+   
     [SerializeField]
     private EnemyWaves[] _enemyWaves;
 
@@ -37,6 +33,7 @@ public class SpawnManager : MonoBehaviour
 
     private int _totalPowerUpWeight;
 
+    private SpawningState state = SpawningState.CountingEnemies;
 
 
     void Start ()
@@ -61,9 +58,9 @@ public class SpawnManager : MonoBehaviour
 
 
     IEnumerator SpawnEnemyRoutine()
-    {
-               
-        while(_stopSpawning == false)
+    {               
+        
+        while(state == SpawningState.SpawningEnemies)
         {
            
             for (int i = 0; i < _enemyWaves[_currentWave].EnemyCount; i++)
@@ -77,27 +74,41 @@ public class SpawnManager : MonoBehaviour
                 yield return new WaitForSeconds(_enemyWaves[_currentWave].SpawnRate);
             }
 
-            _currentWave++;            
+            _currentWave++;
 
-            if (_currentWave > _enemyWaves.Length - 1)
-            {               
-              //  _stopSpawning = true;
-                _uiManager.UpdateWaves("Waves Completed");
+            if (_currentWave <= _enemyWaves.Length - 1)
+            {
+                _uiManager.UpdateWaves(_enemyWaves[_currentWave].Name);
+            }
+
+            if (_currentWave == _enemyWaves.Length)
+            {
+                state = SpawningState.CountingEnemies;
+                StartCoroutine(isBossDefeated());
+
+            }
+            
+
+            if (_currentWave == _enemyWaves.Length - 2)
+            {
+               
+                state = SpawningState.CountingEnemies;
+                StartCoroutine(CountingEnemiesRoutine());
                 break;
             }
 
-            _uiManager.UpdateWaves(_enemyWaves[_currentWave].Name);
+            
 
         }
     }
 
     IEnumerator SpawnPowerUpRoutine()
     {
-        while (_stopSpawning == false)
+        
+        while (state != SpawningState.GameOver)
         {       
 
-            Vector3 PosToSpawn = new Vector3(Random.Range(-9.4f, 9.4f), 7.2f, 0f);
-            //_randomPowerUp = Random.Range(0, 6);
+            Vector3 PosToSpawn = new Vector3(Random.Range(-9.4f, 9.4f), 7.2f, 0f);            
             int _randomWeight = Random.Range(0, _totalPowerUpWeight);
             foreach (PowerUps PowerUpsData in powerUps)
             {
@@ -112,7 +123,6 @@ public class SpawnManager : MonoBehaviour
                     _randomWeight -= PowerUpsData.SpawnWeight;
                 }
 
-
             }
          
             yield return new WaitForSeconds(Random.Range(3, 8));
@@ -123,14 +133,52 @@ public class SpawnManager : MonoBehaviour
 
     public void OnPlayerDeath()
     {
-        _stopSpawning = true;
+       
+        state = SpawningState.GameOver;
     }
 
     public void OnAstroidDestroyed()
     {
-        
+        state = SpawningState.SpawningEnemies;
+        _uiManager.GameStartRoutine();
         StartCoroutine(SpawnEnemyRoutine());
 
         StartCoroutine(SpawnPowerUpRoutine());
+    }
+
+    IEnumerator CountingEnemiesRoutine()
+    {
+        while (state == SpawningState.CountingEnemies)
+        {
+            yield return new WaitForSeconds(.5f);
+            if (GameObject.FindGameObjectWithTag("Enemy") == null)
+            {
+
+                state = SpawningState.SpawningEnemies;
+                _currentWave++;
+                _uiManager.UpdateWaves(_enemyWaves[_currentWave].Name);
+                StartCoroutine(SpawnEnemyRoutine());
+
+            }
+
+        }
+
+        yield break;
+    }
+
+    IEnumerator isBossDefeated()
+    {
+        while (state == SpawningState.CountingEnemies)
+        {
+            yield return new WaitForSeconds(5.0f);
+            if (GameObject.FindGameObjectWithTag("Boss") == null)
+            {
+                state = SpawningState.GameOver;
+                _uiManager.UpdateVictory();
+
+            }  
+        }
+
+        yield break;
     }
 }

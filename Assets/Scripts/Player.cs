@@ -5,7 +5,7 @@ public class Player : MonoBehaviour
 {
 
     [SerializeField]
-    private float _speed = 3.5f;
+    private float _speed = 4.5f;
     [SerializeField]
     private int _score;
 

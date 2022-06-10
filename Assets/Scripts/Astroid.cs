@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Astroid : MonoBehaviour
 {
-   
+
+    private float _speed = 20.0f;
+
     [SerializeField]
     private GameObject _explosionPrefab;
 
@@ -25,8 +27,9 @@ public class Astroid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(0, 0 , .25f, Space.Self);
         
+        transform.Rotate(Vector3.back * _speed * Time.deltaTime);
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)

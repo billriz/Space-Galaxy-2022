@@ -116,7 +116,7 @@ public class Enemy : MonoBehaviour
 
         CheckForPowerUps();
 
-        if (EnemyID ==1)
+        if (EnemyID == 1)
         {
 
             CheckForPlayer();
@@ -330,16 +330,12 @@ public class Enemy : MonoBehaviour
     void CheckForPlayer()
     {
        
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, _castDistance, LayerMask.GetMask("Player"));
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, _castDistance, LayerMask.GetMask("Player"));       
         
-        if (hit.collider != null)
-        {
-            Debug.Log("Found Player");
-        }
         
         if (hit.collider != null && _canFireAtPlayer == true && _isEnemyDestroyed == false)
         {
-            Debug.Log("fired at Player");
+            
             FireSmartLaser();
            
         } 
@@ -364,9 +360,7 @@ public class Enemy : MonoBehaviour
     void DodgeLaser()
     {
 
-        RaycastHit2D Laserhit = Physics2D.CircleCast(transform.position, LaserCastRadius, Vector2.down, LaserCastDistance, LayerMask.GetMask("Laser"));
-        
-        Debug.DrawRay(transform.position, Vector3.down * LaserCastDistance, Color.red);
+        RaycastHit2D Laserhit = Physics2D.CircleCast(transform.position, LaserCastRadius, Vector2.down, LaserCastDistance, LayerMask.GetMask("Laser"));               
 
         if (Laserhit.collider != null)
         {

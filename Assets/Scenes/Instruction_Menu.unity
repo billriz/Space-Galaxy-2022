@@ -190,7 +190,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Laser - Standard Laser, Player can have a max of 50
+  m_Text: Standard Laser - can be fired by the Enemy and the player. Player can have
+    a max of 50
 --- !u!222 &38762194
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -346,7 +347,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Hold Lefft Shift to use the Thruster
+  m_Text: 'Hold Left Shift to use the Thruster
 
 '
 --- !u!222 &231383821
@@ -733,7 +734,7 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: Basic Enemy -  Moves striaght and diagonally down the screen and randomly
-    shots at the Player
+    shoots at the Player
 --- !u!222 &527417862
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -863,7 +864,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 60}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -97, y: -124}
+  m_AnchoredPosition: {x: -97, y: -134}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.6, y: 0.5}
 --- !u!114 &576337247
@@ -972,7 +973,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Give the player 1 life back
+  m_Text: Gives the player 1 life back
 --- !u!222 &581977814
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1355,7 +1356,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Gives the Player 15 Laser when they have less that the Max
+  m_Text: Gives the Player 15 Lasers when they have less that the Max
 --- !u!222 &783903809
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1725,7 +1726,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Give the Player a 180 degree laser blast for 8 seconds
+  m_Text: Gives the Player a 180 degree laser blast for 8 seconds
 --- !u!222 &1066382165
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1962,8 +1963,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Movement is the WASD keys  or Arrow keys, Spacebar is use to shoot the
-    Lasers, press X to shoot the Homing Laser, hold left shift key to use the Thruster,
+  m_Text: Movement is the WASD keys  or Arrow keys, Spacebar is used to shoot the
+    Lasers, Press X to shoot the Homing Laser, Hold left shift key to use the Thruster,
     Press C key to collect all PowerUps.  Object is to destory all enemies in 3 different
     waves to get to the Boss Enemy.  Destory the Boss to be the Victor
 --- !u!222 &1243971629
@@ -2874,7 +2875,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -87, y: -68}
+  m_AnchoredPosition: {x: -87, y: -78}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1715563150
