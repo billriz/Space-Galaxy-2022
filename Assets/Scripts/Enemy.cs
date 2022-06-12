@@ -67,14 +67,14 @@ public class Enemy : MonoBehaviour
         _player = GameObject.Find("Player").GetComponent<Player>();
         if (_player == null)
         {
-            Debug.Log("Player is NULL");
+            Debug.LogError("Player is NULL");
         }
 
         _anim = GetComponent<Animator>();
         if (_anim == null)
         {
 
-            Debug.Log("Animator is NULL");
+            Debug.LogError("Animator is NULL");
         }
 
         StartCoroutine(FireControlRoutine());

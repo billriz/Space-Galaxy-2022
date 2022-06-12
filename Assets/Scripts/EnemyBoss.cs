@@ -63,9 +63,7 @@ public class EnemyBoss : MonoBehaviour
 
             FireTurit();
             
-        }
-
-         
+        }        
         
     }
 

@@ -32,7 +32,7 @@ public class SpawnManager : MonoBehaviour
     private PowerUps[] powerUps;
 
     private int _totalPowerUpWeight;
-
+    [SerializeField]
     private SpawningState state = SpawningState.CountingEnemies;
 
 
@@ -63,42 +63,50 @@ public class SpawnManager : MonoBehaviour
         while(state == SpawningState.SpawningEnemies)
         {
            
-            for (int i = 0; i < _enemyWaves[_currentWave].EnemyCount; i++)
+            for (int i = 0; i < _enemyWaves[_currentWave].EnemyCount && state != SpawningState.GameOver ; i++)
             {
-                
-                Vector3 posToSpawn = new Vector3(Random.Range(-8f,8f), 7.5f, 0f);
-                int RandomEnemy = Random.Range(0, _enemyWaves[_currentWave].EnemyToSpawn.Length);               
-                GameObject newEnemy = Instantiate(_enemyWaves[_currentWave].EnemyToSpawn[RandomEnemy], posToSpawn, Quaternion.identity);
-                newEnemy.transform.parent = _enemyContainer.transform;
+
+                SpawnEnemies();               
 
                 yield return new WaitForSeconds(_enemyWaves[_currentWave].SpawnRate);
             }
 
-            _currentWave++;
+           if (state != SpawningState.GameOver)
+           {
+                GetCurrentWave();
+           }  
 
-            if (_currentWave <= _enemyWaves.Length - 1)
-            {
-                _uiManager.UpdateWaves(_enemyWaves[_currentWave].Name);
-            }
+        }
+    }
 
-            if (_currentWave == _enemyWaves.Length)
-            {
-                state = SpawningState.CountingEnemies;
-                StartCoroutine(isBossDefeated());
+    private void SpawnEnemies()
+    {
+        Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7.5f, 0f);
+        int RandomEnemy = Random.Range(0, _enemyWaves[_currentWave].EnemyToSpawn.Length);
+        GameObject newEnemy = Instantiate(_enemyWaves[_currentWave].EnemyToSpawn[RandomEnemy], posToSpawn, Quaternion.identity);
+        newEnemy.transform.parent = _enemyContainer.transform;
 
-            }
-            
+    }
 
-            if (_currentWave == _enemyWaves.Length - 2)
-            {
-               
-                state = SpawningState.CountingEnemies;
-                StartCoroutine(CountingEnemiesRoutine());
-                break;
-            }
+    private void GetCurrentWave()
+    {
+        _currentWave++;
 
-            
+        if (_currentWave <= _enemyWaves.Length - 1)
+        {
+            _uiManager.UpdateWaves(_enemyWaves[_currentWave].Name);
+        }
 
+        if (_currentWave == _enemyWaves.Length)
+        {
+            state = SpawningState.CountingEnemies;
+            StartCoroutine(isBossDefeated());
+        }
+
+        if (_currentWave == _enemyWaves.Length - 2)        {
+
+            state = SpawningState.CountingEnemies;
+            StartCoroutine(CountingEnemiesRoutine());            
         }
     }
 

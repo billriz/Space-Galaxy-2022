@@ -7,11 +7,9 @@ using UnityEngine;
 public class EnemyWaves
 
 {
-
     public string Name;
     public GameObject[] EnemyToSpawn;
     public int EnemyCount;
     public float SpawnRate;
-
 
 }
