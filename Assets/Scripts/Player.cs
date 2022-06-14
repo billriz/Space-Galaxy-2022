@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     private int _score;
 
     private int _ammoCount;
-    private int _ammoMax = 50;
+    private int _ammoMax = 15;
 
     private int _homingLaserCount;
     private int _homingLaserMax = 3;
