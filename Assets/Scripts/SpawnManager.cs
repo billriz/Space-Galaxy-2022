@@ -116,7 +116,7 @@ public class SpawnManager : MonoBehaviour
         while (state != SpawningState.GameOver)
         {       
 
-            Vector3 PosToSpawn = new Vector3(Random.Range(-9.4f, 9.4f), 7.2f, 0f);            
+            Vector3 PosToSpawn = new Vector3(Random.Range(-9f, 9f), 7.2f, 0f);            
             int _randomWeight = Random.Range(0, _totalPowerUpWeight);
             foreach (PowerUps PowerUpsData in powerUps)
             {

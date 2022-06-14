@@ -56,6 +56,8 @@ public class Player : MonoBehaviour
 
     private bool _isPhotonBlastActive = false;
 
+    private bool _isNegativeBoost = false;
+
     private bool _isThrusterActive;
     [SerializeField]
     private AudioClip _laserAudioClip;
@@ -327,6 +329,19 @@ public class Player : MonoBehaviour
         _isSpeedBoostActive = false;
     }
 
+    public void NegativePowerUp()
+    {
+        _isNegativeBoost = true;
+        StartCoroutine(NegativeCoolDown());
+
+    }
+
+    IEnumerator NegativeCoolDown()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _isNegativeBoost = false;
+    }
+
     public void ShieldActive()
     {
         _isShieldActive = true;
@@ -394,6 +409,10 @@ public class Player : MonoBehaviour
         else if (_isThrusterActive == true)
         {
             _speedboost = 2.0f;
+        }
+        else if (_isNegativeBoost == true)
+        {
+            _speedboost = .25f;
         }
         else
         {
