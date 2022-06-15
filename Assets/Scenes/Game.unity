@@ -1818,6 +1818,8 @@ MonoBehaviour:
     - {fileID: 202244807729726215, guid: 8a0e470901b7cd44eb7300410c7b24b1, type: 3}
     EnemyCount: 1
     SpawnRate: 1
+  _currentWave: 0
+  _waveLength: 0
   powerUps:
   - Name: Rechare Laser
     PowerUpToSpawn: {fileID: 4957844074746908384, guid: da8919c05754fcc4cbf7866187d9e2ea,

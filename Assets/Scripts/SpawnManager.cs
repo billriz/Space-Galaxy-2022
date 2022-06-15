@@ -15,8 +15,10 @@ public class SpawnManager : MonoBehaviour
    
     [SerializeField]
     private EnemyWaves[] _enemyWaves;
-
+    [SerializeField]
     private int _currentWave = 0;
+    [SerializeField]
+    private int _waveLength;
 
     private UIManager _uiManager;
 
@@ -54,6 +56,8 @@ public class SpawnManager : MonoBehaviour
             _totalPowerUpWeight += PowerUpsData.SpawnWeight;
 
         }
+
+        _waveLength = _enemyWaves.Length;
     }
 
 
@@ -71,7 +75,13 @@ public class SpawnManager : MonoBehaviour
                 yield return new WaitForSeconds(_enemyWaves[_currentWave].SpawnRate);
             }
 
-           if (state != SpawningState.GameOver)
+            if (_currentWave == _enemyWaves.Length - 2)
+            {
+                state = SpawningState.CountingEnemies;
+                StartCoroutine(CountingEnemiesRoutine());
+            }
+
+           if (state == SpawningState.SpawningEnemies)
            {
                 GetCurrentWave();
            }  
@@ -102,12 +112,7 @@ public class SpawnManager : MonoBehaviour
             state = SpawningState.CountingEnemies;
             StartCoroutine(isBossDefeated());
         }
-
-        if (_currentWave == _enemyWaves.Length - 2)        {
-
-            state = SpawningState.CountingEnemies;
-            StartCoroutine(CountingEnemiesRoutine());            
-        }
+        
     }
 
     IEnumerator SpawnPowerUpRoutine()
